@@ -171,7 +171,7 @@ export default function Home() {
                   ))}
                 </ul>
 
-                <div className="flex gap-4 pt-2">
+                <div className="flex flex-wrap gap-3 pt-2">
                   {project.links.github && (
                     <a className="link-hover text-sm" href={project.links.github} target="_blank" rel="noreferrer">
                       GitHub
@@ -183,13 +183,49 @@ export default function Home() {
                     </a>
                   )}
                   {project.links.kaggle && (
-                    <a className="link-hover text-sm" href={project.links.kaggle} target="_blank" rel="noreferrer">
-                      Kaggle
+                    <a 
+                      className="text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200"
+                      href={project.links.kaggle} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      style={{
+                        background: 'linear-gradient(135deg, #20BEFF 0%, #1B9FD9 100%)',
+                        color: '#ffffff',
+                        boxShadow: '0 2px 8px rgba(32, 190, 255, 0.3)',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(32, 190, 255, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(32, 190, 255, 0.3)';
+                      }}
+                    >
+                      🏆 Kaggle
                     </a>
                   )}
                   {(project.links as any).sample && (
-                    <a className="link-hover text-sm" href={(project.links as any).sample} target="_blank" rel="noreferrer">
-                      Örnek Çalışma
+                    <a 
+                      className="text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200"
+                      href={(project.links as any).sample} 
+                      target="_blank" 
+                      rel="noreferrer"
+                      style={{
+                        background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                        color: '#ffffff',
+                        boxShadow: '0 2px 8px rgba(16, 185, 129, 0.3)',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-2px)';
+                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.3)';
+                      }}
+                    >
+                      📄 Örnek Çalışma
                     </a>
                   )}
                   {(project.links as any).presentation && (
