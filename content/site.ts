@@ -66,7 +66,7 @@ export const site = {
       links: {
         github: "",
         demo: "",
-        kaggle: "https://www.kaggle.com/competitions/playground-series-s5e12",
+        kaggle: "https://www.kaggle.com/yiitcancokun/code",
       },
       highlights: ["Data Preprocessing", "EDA", "Feature Engineering", "Modeling"],
     },
