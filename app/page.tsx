@@ -132,110 +132,112 @@ export default function Home() {
             Projeler
           </h2>
           <div className="space-y-6">
-            {site.projects.map((project) => (
-              <article key={project.name} className="project-card">
-                <h3 className="text-lg font-semibold mb-2">
-                  {project.name}
-                </h3>
-                {(project as any).period && (
-                  <p className="text-xs mb-2" style={{ color: 'var(--muted)', fontStyle: 'italic' }}>
-                    {(project as any).period}
-                  </p>
-                )}
-                <p className="text-sm mb-4" style={{ color: 'var(--muted)' }}>
-                  {project.description}
-                </p>
+            {site.projects.map((project) => {
+              // Her proje için öncelikli linki belirle
+              const primaryLink = 
+                project.links.kaggle || 
+                (project.links as any).sample || 
+                project.links.github || 
+                project.links.demo || 
+                (project.links as any).presentation || 
+                '#';
+              
+              // Link türüne göre renk belirle
+              const getLinkStyle = () => {
+                if (project.links.kaggle) {
+                  return {
+                    background: 'linear-gradient(135deg, #20BEFF 0%, #1B9FD9 100%)',
+                    icon: '🏆',
+                    label: 'Kaggle'
+                  };
+                } else if ((project.links as any).sample) {
+                  return {
+                    background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
+                    icon: '📄',
+                    label: 'Örnek Çalışma'
+                  };
+                } else if (project.links.github) {
+                  return {
+                    background: 'linear-gradient(135deg, #6366F1 0%, #4F46E5 100%)',
+                    icon: '💻',
+                    label: 'GitHub'
+                  };
+                } else if (project.links.demo) {
+                  return {
+                    background: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+                    icon: '🚀',
+                    label: 'Demo'
+                  };
+                }
+                return { background: 'var(--card-bg)', icon: '', label: '' };
+              };
 
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tech.map((tech) => (
-                    <span 
-                      key={tech} 
-                      className="text-xs px-2 py-1 rounded-md"
-                      style={{ 
-                        background: 'var(--background)', 
-                        color: 'var(--muted)',
-                        border: '1px solid var(--border)'
-                      }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+              const linkStyle = getLinkStyle();
 
-                <ul className="text-sm space-y-1 mb-4" style={{ color: 'var(--muted)' }}>
-                  {project.highlights.map((highlight) => (
-                    <li key={highlight} className="flex items-center gap-2">
-                      <span style={{ color: 'var(--foreground)' }}>→</span>
-                      {highlight}
-                    </li>
-                  ))}
-                </ul>
+              return (
+                <a 
+                  key={project.name} 
+                  href={primaryLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="project-card block transition-all duration-200"
+                  style={{ 
+                    cursor: primaryLink === '#' ? 'default' : 'pointer',
+                    textDecoration: 'none',
+                    color: 'inherit'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (primaryLink !== '#') {
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.15)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '';
+                  }}
+                >
+                  <article>
+                    <h3 className="text-lg font-semibold mb-2">
+                      {project.name}
+                    </h3>
+                    {(project as any).period && (
+                      <p className="text-xs mb-2" style={{ color: 'var(--muted)', fontStyle: 'italic' }}>
+                        {(project as any).period}
+                      </p>
+                    )}
+                    <p className="text-sm mb-4" style={{ color: 'var(--muted)' }}>
+                      {project.description}
+                    </p>
 
-                <div className="flex flex-wrap gap-3 pt-2">
-                  {project.links.github && (
-                    <a className="link-hover text-sm" href={project.links.github} target="_blank" rel="noreferrer">
-                      GitHub
-                    </a>
-                  )}
-                  {project.links.demo && (
-                    <a className="link-hover text-sm" href={project.links.demo} target="_blank" rel="noreferrer">
-                      Demo
-                    </a>
-                  )}
-                  {project.links.kaggle && (
-                    <a 
-                      className="text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200"
-                      href={project.links.kaggle} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      style={{
-                        background: 'linear-gradient(135deg, #20BEFF 0%, #1B9FD9 100%)',
-                        color: '#ffffff',
-                        boxShadow: '0 2px 8px rgba(32, 190, 255, 0.3)',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(32, 190, 255, 0.4)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(32, 190, 255, 0.3)';
-                      }}
-                    >
-                      🏆 Kaggle
-                    </a>
-                  )}
-                  {(project.links as any).sample && (
-                    <a 
-                      className="text-sm font-medium px-4 py-2 rounded-lg transition-all duration-200"
-                      href={(project.links as any).sample} 
-                      target="_blank" 
-                      rel="noreferrer"
-                      style={{
-                        background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-                        color: '#ffffff',
-                        boxShadow: '0 2px 8px rgba(16, 185, 129, 0.3)',
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-2px)';
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(16, 185, 129, 0.4)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)';
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.3)';
-                      }}
-                    >
-                      📄 Örnek Çalışma
-                    </a>
-                  )}
-                  {(project.links as any).presentation && (
-                    <a className="link-hover text-sm" href={(project.links as any).presentation} target="_blank" rel="noreferrer">
-                      Sunum
-                    </a>
-                  )}
-                </div>
-              </article>
-            ))}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tech.map((tech) => (
+                        <span 
+                          key={tech} 
+                          className="text-xs px-2 py-1 rounded-md"
+                          style={{ 
+                            background: 'var(--background)', 
+                            color: 'var(--muted)',
+                            border: '1px solid var(--border)'
+                          }}
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <ul className="text-sm space-y-1" style={{ color: 'var(--muted)' }}>
+                      {project.highlights.map((highlight) => (
+                        <li key={highlight} className="flex items-center gap-2">
+                          <span style={{ color: 'var(--foreground)' }}>→</span>
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                </a>
+              );
+            })}
           </div>
         </section>
 
