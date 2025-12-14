@@ -17,7 +17,7 @@ export const site = {
     {
       year: "2003",
       title: "Merhaba Dünya & İlk Kıvılcım",
-      description: "İstanbul, Kadıköy'de doğdum. Bilgisayarın evimize girmesiyle (5 yaş) teknolojiye olan adaptasyonum başladı. Hiperaktif bir çocukluk ve \"Bilim Çocuk\" dergileriyle beslenen bir merak duygusu, bugünkü analitik zekamın temellerini attı."
+      description: "İstanbul, Kadıköy'de doğdum. Bilgisayarın evimize girmesiyle (5 yaşındayken) teknolojiye olan adaptasyonum başladı. Hiperaktif bir çocukluk ve \"Bilim Çocuk\" dergileriyle beslenen bir merak duygusu, bugünkü analitik zekamın temellerini attı."
     },
     {
       year: "2017",
@@ -27,12 +27,12 @@ export const site = {
     {
       year: "2020",
       title: "Kırılma Noktası",
-      description: "Pandemi yılları, benim için tam bir \"kuluçka\" dönemiydi. Oyun dünyasında geçirdiğim uzun saatler, aslında dijital dünyanın dinamiklerini ve kullanıcı deneyimini en ince detayına kadar analiz etmemi sağladı. Bu süreçteki teknolojik doyum, beni oyun oynamaktan oyunun kurallarını yazmaya (kodlamaya) iten en büyük güç oldu."
+      description: "Pandemi yılları, evde çok fazla zaman geçirdiğim bir dönemdi. Sürekli oyun oynuyordum ve bu zamanı boşa harcıyormuşum gibi hissediyordum. Ama aslında, bu süreçte dijital dünyayı ve teknolojiyi çok yakından tanıma fırsatı buldum. Oyuncuların neye ihtiyaç duyduğunu ve iyi bir yazılımın nasıl olması gerektiğini gözlemledim. Bu aşırı teknoloji tüketimi, sonunda bana 'Tüketmek yerine üretmeliyim' dedirtti ve beni tekrar yazılım öğrenmeye yönlendiren en büyük itici güç oldu."
     },
     {
       year: "2021",
       title: "Yüzleşme ve İrade",
-      description: "Lise sonrasında ilk denememde hedeflerimin gerisinde kaldım (365K). Ancak bu sonucu bir başarısızlık olarak değil, bir strateji değişikliği sinyali olarak gördüm. Bir yıl boyunca sosyal hayattan feragat ederek, disiplinli bir çalışma programıyla kendimi yeniden inşa ettim. Bu süreç bana zaman yönetimini ve kriz anlarında soğukkanlı kalmayı öğretti."
+      description: "Lise sonrasında ilk YKS denememde hedeflerimin gerisinde kaldım (365K). Ancak bu sonucu bir başarısızlık olarak değil, bir strateji değişikliği sinyali olarak gördüm. Bir yıl boyunca sosyal hayattan feragat ederek, disiplinli bir çalışma programıyla kendimi yeniden inşa ettim. Bu süreç bana zaman yönetimini ve kriz anlarında soğukkanlı kalmayı öğretti."
     },
     {
       year: "2022",
@@ -40,9 +40,9 @@ export const site = {
       description: "Sıkı çalışmanın karşılığını sıralamamı 85K'ya çekerek aldım ve Yıldız Teknik Üniversitesi İstatistik bölümüne yerleştim. Başta sadece bir \"bölüm\" olarak baktığım İstatistik, aslında çocukluğumdaki merakın ve lisedeki yazılım ilgimin kesişim kümesiydi. Verinin matematiğini anlamadan, onu yönetemeyeceğimi fark ettim."
     },
     {
-      year: "2024+",
-      title: "AI & Gelecek (The Vision)",
-      description: "Şu an; İstatistiksel altyapımı, Python ve Modern AI araçlarıyla (LLMs, Agents) birleştiriyorum. Artık sadece oyun oynayan çocuk veya sınav çözen öğrenci değilim; Kaggle'da yarışan, Hackathon'larda ürün geliştiren ve geleceğin teknolojilerini bugünden inşa eden bir Veri Bilimci adayıyım."
+      year: "2025",
+      title: "Yapay Zeka ve Veri Bilimi",
+      description: "İstatistik bölümünde geçirdiğim 2 yılın ardından ilerlemek ve uzmanlaşmak istediğim alanı keşfettim: Yapay Zeka. Bu yola girerken sırayla Python, Makine Öğrenmesi, Derin Öğrenme Temelleri, AI Ajanları ve LLM'leri öğrenebildim ve öğrenmeye de devam ediyorum. Asla bir konuda her şeyi biliyorum triplerine girmem, her zaman öğrenecek yeni bir şey vardır diye düşünen birisiyim. Bu düşünce de benim motivasyonumu arttıran unsurlardan biri."
     }
   ],
   education: {
