@@ -1,11 +1,144 @@
 'use client';
 
+import { useState } from 'react';
 import { site } from "../content/site";
+import MouseGlow from "../components/MouseGlow";
 import Image from "next/image";
 
 export default function Home() {
+  const [showTimeline, setShowTimeline] = useState(false);
+  const [galleryPhotos, setGalleryPhotos] = useState<string[] | null>(null);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+
   return (
     <>
+      <MouseGlow />
+      
+      {/* Photo Gallery Modal */}
+      {galleryPhotos && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: 'rgba(0, 0, 0, 0.9)', backdropFilter: 'blur(10px)' }}
+          onClick={() => setGalleryPhotos(null)}
+        >
+          <button 
+            onClick={() => setGalleryPhotos(null)}
+            className="absolute top-4 right-4 text-3xl hover:opacity-70 transition-opacity z-10"
+            style={{ color: 'white' }}
+          >
+            ✕
+          </button>
+          
+          {/* Previous Button */}
+          {galleryPhotos.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentPhotoIndex((prev) => (prev - 1 + galleryPhotos.length) % galleryPhotos.length);
+              }}
+              className="absolute left-4 text-6xl hover:opacity-70 transition-opacity p-4"
+              style={{ color: 'white', zIndex: 100, background: 'rgba(0,0,0,0.3)', borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              ‹
+            </button>
+          )}
+          
+          {/* Photo */}
+          <div 
+            className="relative max-w-4xl max-h-[80vh]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={galleryPhotos[currentPhotoIndex]}
+              alt={`Photo ${currentPhotoIndex + 1}`}
+              width={1200}
+              height={800}
+              className="rounded-lg object-contain"
+              style={{ maxHeight: '80vh', width: 'auto' }}
+            />
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2">
+              {galleryPhotos.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setCurrentPhotoIndex(index);
+                  }}
+                  className="w-2 h-2 rounded-full transition-all"
+                  style={{ 
+                    background: index === currentPhotoIndex ? 'var(--accent)' : 'rgba(255,255,255,0.5)',
+                    transform: index === currentPhotoIndex ? 'scale(1.5)' : 'scale(1)'
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          
+          {/* Next Button */}
+          {galleryPhotos.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setCurrentPhotoIndex((prev) => (prev + 1) % galleryPhotos.length);
+              }}
+              className="absolute right-4 text-6xl hover:opacity-70 transition-opacity p-4"
+              style={{ color: 'white', zIndex: 100, background: 'rgba(0,0,0,0.3)', borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              ›
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Timeline Modal */}
+      {showTimeline && (
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ background: 'rgba(0, 0, 0, 0.8)', backdropFilter: 'blur(10px)', overflowY: 'auto' }}
+          onClick={() => setShowTimeline(false)}
+        >
+          <div 
+            className="glass-card p-8 w-full max-w-2xl my-8"
+            onClick={(e) => e.stopPropagation()}
+            style={{ 
+              background: 'rgba(20, 20, 25, 0.95)',
+              maxHeight: 'calc(100vh - 64px)',
+              overflowY: 'auto'
+            }}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold gradient-text">Hikayem</h2>
+              <button 
+                onClick={() => setShowTimeline(false)}
+                className="text-2xl hover:opacity-70 transition-opacity"
+                style={{ color: 'var(--muted)' }}
+              >
+                ✕
+              </button>
+            </div>
+            <div className="space-y-6">
+              {(site as any).aboutTimeline?.map((item: any, index: number) => (
+                <div key={index} className="relative pl-8 pb-6 border-l-2" style={{ borderColor: 'var(--accent)' }}>
+                  <div 
+                    className="absolute left-0 top-0 w-4 h-4 rounded-full transform -translate-x-1/2"
+                    style={{ background: 'var(--gradient-primary)', boxShadow: '0 0 10px rgba(139, 92, 246, 0.5)' }}
+                  />
+                  <span className="text-sm font-semibold px-2 py-1 rounded" style={{ background: 'rgba(139, 92, 246, 0.2)', color: 'var(--accent)' }}>
+                    📍 {item.year}
+                  </span>
+                  <h3 className="text-lg font-semibold mt-2 mb-2" style={{ color: 'var(--foreground)' }}>
+                    {item.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       <main className="min-h-screen">
         <div className="mx-auto max-w-2xl px-6 py-20">
         
@@ -58,10 +191,14 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* About Section */}
+        {/* About Section - Clickable */}
         <section className="fade-in-up fade-in-up-delay-1">
           <h2 className="section-title">Hakkımda</h2>
-          <div className="glass-card p-6">
+          <div 
+            className="glass-card p-6 cursor-pointer transition-all hover:scale-[1.02]"
+            onClick={() => setShowTimeline(true)}
+            style={{ position: 'relative' }}
+          >
             <div className="space-y-3">
               {site.about.map((paragraph, index) => (
                 <p key={index} className="text-base leading-relaxed" style={{ color: 'var(--foreground)' }}>
@@ -69,8 +206,64 @@ export default function Home() {
                 </p>
               ))}
             </div>
+            <div className="mt-4 flex items-center gap-2 text-sm" style={{ color: 'var(--accent)' }}>
+              <span>📖 Hikayemi oku</span>
+              <span>→</span>
+            </div>
           </div>
         </section>
+
+        <div className="divider" />
+
+        {/* Education Section */}
+        {(site as any).education && (
+          <section className="fade-in-up fade-in-up-delay-2">
+            <h2 className="section-title">Eğitim</h2>
+            <a 
+              href={(site as any).education.link} 
+              target="_blank" 
+              rel="noreferrer"
+              className="glass-card p-6 flex items-center gap-6 cursor-pointer"
+              style={{ textDecoration: 'none', color: 'inherit', display: 'flex' }}
+            >
+              <div className="flex-shrink-0">
+                <Image
+                  src={(site as any).education.logo}
+                  alt={(site as any).education.school}
+                  width={80}
+                  height={80}
+                  className="rounded-lg"
+                  style={{ 
+                    background: 'white', 
+                    padding: '8px',
+                    objectFit: 'contain'
+                  }}
+                />
+              </div>
+              <div className="flex-grow">
+                <h3 className="text-xl font-semibold mb-1" style={{ color: 'var(--foreground)' }}>
+                  {(site as any).education.school}
+                </h3>
+                <p className="text-base mb-2" style={{ color: 'var(--muted)' }}>
+                  {(site as any).education.department} - {(site as any).education.degree}
+                </p>
+                <div className="flex items-center gap-4">
+                  <span className="text-sm" style={{ color: 'var(--accent)' }}>
+                    📚 {(site as any).education.year}
+                  </span>
+                  <span className="text-sm px-3 py-1 rounded-full" style={{ 
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    color: 'white',
+                    fontWeight: '600'
+                  }}>
+                    GPA: {(site as any).education.gpa}
+                  </span>
+                </div>
+              </div>
+              <span className="text-xl" style={{ color: 'var(--accent)' }}>↗</span>
+            </a>
+          </section>
+        )}
 
         <div className="divider" />
 
@@ -126,6 +319,7 @@ export default function Home() {
           <h2 className="section-title">Projeler</h2>
           <div className="space-y-6">
             {site.projects.map((project) => {
+              const photos = (project as any).photos as string[] | undefined;
               const primaryLink = 
                 project.links.kaggle || 
                 (project.links as any).sample || 
@@ -134,23 +328,39 @@ export default function Home() {
                 (project.links as any).presentation || 
                 '#';
 
+              const handleClick = (e: React.MouseEvent) => {
+                if (photos && photos.length > 0) {
+                  e.preventDefault();
+                  setCurrentPhotoIndex(0);
+                  setGalleryPhotos(photos);
+                }
+              };
+
               return (
                 <a 
                   key={project.name} 
-                  href={primaryLink}
-                  target="_blank"
-                  rel="noreferrer"
+                  href={photos ? '#' : primaryLink}
+                  target={photos ? undefined : "_blank"}
+                  rel={photos ? undefined : "noreferrer"}
                   className="project-card block"
                   style={{ 
-                    cursor: primaryLink === '#' ? 'default' : 'pointer',
+                    cursor: 'pointer',
                     textDecoration: 'none',
                     color: 'inherit'
                   }}
+                  onClick={handleClick}
                 >
                   <article>
-                    <h3 className="text-xl font-semibold mb-2 gradient-text">
-                      {project.name}
-                    </h3>
+                    <div className="flex justify-between items-start">
+                      <h3 className="text-xl font-semibold mb-2 gradient-text">
+                        {project.name}
+                      </h3>
+                      {photos && (
+                        <span className="text-sm px-2 py-1 rounded" style={{ background: 'rgba(139, 92, 246, 0.2)', color: 'var(--accent)' }}>
+                          📸 {photos.length} fotoğraf
+                        </span>
+                      )}
+                    </div>
                     {(project as any).period && (
                       <p className="text-xs mb-3" style={{ color: 'var(--accent)' }}>
                         📅 {(project as any).period}
