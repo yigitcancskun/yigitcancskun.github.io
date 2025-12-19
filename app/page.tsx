@@ -9,6 +9,7 @@ export default function Home() {
   const [showTimeline, setShowTimeline] = useState(false);
   const [galleryPhotos, setGalleryPhotos] = useState<string[] | null>(null);
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
+  const [minecraftMode, setMinecraftMode] = useState(false);
 
   return (
     <>
@@ -139,8 +140,22 @@ export default function Home() {
         </div>
       )}
 
-      <main className="min-h-screen">
-        <div className="mx-auto max-w-2xl px-6 py-20">
+      <main className={`min-h-screen ${minecraftMode ? 'minecraft-mode' : ''}`}>
+        {/* Minecraft Mode Toggle */}
+        <button
+          onClick={() => setMinecraftMode(!minecraftMode)}
+          className="fixed top-4 right-4 z-40 px-4 py-2 rounded-lg transition-all hover:scale-105"
+          style={{
+            background: minecraftMode ? 'linear-gradient(135deg, #10b981 0%, #059669 100%)' : 'rgba(255, 255, 255, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            color: 'var(--foreground)',
+            fontSize: minecraftMode ? '9px' : '14px',
+            fontFamily: minecraftMode ? 'var(--font-press-start)' : 'inherit'
+          }}
+        >
+          🎮 {minecraftMode ? 'Normal Mod' : 'Minecraft Modu'}
+        </button>
+        <div className="mx-auto max-w-4xl px-6 py-20">
         
         {/* Hero Section */}
         <header className="fade-in-up">
